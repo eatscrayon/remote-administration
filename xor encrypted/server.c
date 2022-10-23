@@ -70,9 +70,11 @@ int main(int argc, char *argv[])
     socket_fd = accept(sock, (struct sockaddr *)&client, &client_len);
     if (socket_fd < 0)
     {
+        close(sock);
         close(socket_fd);
         exit(3);
     }
+    close(sock);
     int pipeA[2];
     int pipeB[2];
     pipe(pipeA);
