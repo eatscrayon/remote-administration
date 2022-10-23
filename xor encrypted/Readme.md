@@ -8,6 +8,6 @@ gcc -o rev.bin reverse-shell.c
 
 ## Shell Catcher
 ```
-gcc -o catcher ./catcher.c
-./client 58008 mysecretpassword 
+gcc -o server ./server.c
+./server 58008 mysecretpassword 
 ```
