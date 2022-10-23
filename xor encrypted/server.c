@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
         exit(2);
     }
     listen(sock, 0);
+    fprintf(stderr, "%s", "Listening\n");
     client_len = sizeof(client);
     socket_fd = accept(sock, (struct sockaddr *)&client, &client_len);
     if (socket_fd < 0)
@@ -74,6 +75,7 @@ int main(int argc, char *argv[])
         close(socket_fd);
         exit(3);
     }
+    fprintf(stderr, "%s", "Shell Connected!\n");
     close(sock);
     int pipeA[2];
     int pipeB[2];
