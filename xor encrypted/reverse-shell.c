@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
         }
 
         close(sock);
-        sleep(3);
+        sleep(30);
     }
     return 0;
 }
